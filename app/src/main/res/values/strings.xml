@@ -30,4 +30,7 @@
     <string name="name">이름</string>
     <string name="password_rule">영문, 숫자, 특수문자 중 3종류 이상을 조합하여 최소 8자리 이상의 길이</string>
     <string name="not_matched_password">입력하신 비밀번호와 일치하지 않습니다.</string>
+    <string name="login_home">로그인 홈</string>
+    <string name="login_id_pw">ID/PW로 로그인</string>
+    <string name="login">로그인</string>
 </resources>

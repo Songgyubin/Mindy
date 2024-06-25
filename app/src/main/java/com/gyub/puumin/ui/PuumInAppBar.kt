@@ -1,5 +1,6 @@
 package com.gyub.puumin.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -25,11 +26,11 @@ import com.gyub.puumin.navigation.SignUpDestination
 @Composable
 fun PuumInCenterAlignedAppBar(
     modifier: Modifier = Modifier,
-    currentScreen: SignUpDestination,
+    @StringRes title: Int,
     navigateUp: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(text = stringResource(currentScreen.title)) },
+        title = { Text(text = stringResource(title)) },
         modifier = modifier,
         navigationIcon = {
             IconButton(onClick = navigateUp) {

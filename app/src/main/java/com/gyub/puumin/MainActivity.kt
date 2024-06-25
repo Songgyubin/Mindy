@@ -16,9 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gyub.design.theme.PuumInTheme
-import com.gyub.puumin.base.state.UiState
 import com.gyub.puumin.ui.HomeScreen
-import com.gyub.puumin.ui.LoginScreen
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

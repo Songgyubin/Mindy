@@ -11,34 +11,32 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gyub.design.theme.PuumInTheme
-import com.gyub.puumin.navigation.SignUpDestination
-import com.gyub.puumin.navigation.SignUpNavHost
-import com.gyub.puumin.auth.ui.EMAIL_AUTH_ROOT
-import com.gyub.puumin.auth.ui.PASSWORD_ROUTE
-import com.gyub.puumin.auth.ui.USER_INFO_ROUTE
+import com.gyub.puumin.auth.ui.EMAIL_LOGIN_ROUTE
+import com.gyub.puumin.auth.ui.LOGIN_HOME_ROUTE
+import com.gyub.puumin.navigation.LoginDestination
+import com.gyub.puumin.navigation.LoginNavHost
 import com.gyub.puumin.ui.PuumInCenterAlignedAppBar
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * 회원가입 Activity
+ * 로그인 Activity
  *
  * @author   Gyub
- * @created  2024/06/19
+ * @created  2024/06/25
  */
 @AndroidEntryPoint
-class SignUpActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             PuumInTheme {
-                SignUpScreen()
+                LoginScreen()
             }
         }
     }
 
     @Composable
-    fun SignUpScreen(
+    fun LoginScreen(
         modifier: Modifier = Modifier,
         navController: NavHostController = rememberNavController(),
     ) {
@@ -46,10 +44,9 @@ class SignUpActivity : ComponentActivity() {
             ?.destination
 
         val currentScreen = when (currentDestination?.route) {
-            EMAIL_AUTH_ROOT -> SignUpDestination.EMAIL_AUTH
-            USER_INFO_ROUTE -> SignUpDestination.USER_INFO
-            PASSWORD_ROUTE -> SignUpDestination.PASSWORD
-            else -> SignUpDestination.EMAIL_AUTH
+            LOGIN_HOME_ROUTE -> LoginDestination.LOGIN_HOME
+            EMAIL_LOGIN_ROUTE -> LoginDestination.LOGIN_EMAIL
+            else -> LoginDestination.LOGIN_HOME
         }
 
         Scaffold(
@@ -60,9 +57,9 @@ class SignUpActivity : ComponentActivity() {
                 )
             },
         ) { contentPadding ->
-            SignUpNavHost(
+            LoginNavHost(
                 modifier = modifier.padding(contentPadding),
-                navController = navController
+                navController = navController,
             )
         }
     }
