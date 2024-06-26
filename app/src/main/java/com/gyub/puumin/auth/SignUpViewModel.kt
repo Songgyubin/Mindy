@@ -1,6 +1,5 @@
 package com.gyub.puumin.auth
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gyub.puumin.base.state.UiState
@@ -25,8 +24,8 @@ class SignUpViewModel
     private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
 
-    private val _emailUiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val emailUiState = _emailUiState.asStateFlow()
+    private val _emailSendingUiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    val emailSendingUiState = _emailSendingUiState.asStateFlow()
 
     private val _emailVerifyUiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val emailVerifyUiState = _emailVerifyUiState.asStateFlow()
@@ -102,8 +101,7 @@ class SignUpViewModel
                 delay(200)
                 emit(UiState.Success)
             }.collect {
-                _emailUiState.value = it
-                Log.d("TAG", "email - : ${email.value}")
+                _emailSendingUiState.value = it
             }
         }
     }
@@ -128,7 +126,7 @@ class SignUpViewModel
      */
     fun resetEmailVerifyState() {
         _emailVerifyCode.value = ""
-        _emailUiState.value = UiState.Loading
+        _emailSendingUiState.value = UiState.Loading
         _emailVerifyUiState.value = UiState.Loading
     }
 

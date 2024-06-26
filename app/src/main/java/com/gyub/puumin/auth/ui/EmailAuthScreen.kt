@@ -60,7 +60,7 @@ fun EmailAuthRoute(
     onNext: () -> Unit,
 ) {
     val email by viewModel.email.collectAsStateWithLifecycle()
-    val emailUiState by viewModel.emailUiState.collectAsStateWithLifecycle()
+    val emailSendingUiState by viewModel.emailSendingUiState.collectAsStateWithLifecycle()
     val emailVerifyUiState by viewModel.emailVerifyUiState.collectAsStateWithLifecycle()
     val emailVerifyCode by viewModel.emailVerifyCode.collectAsStateWithLifecycle()
 
@@ -68,7 +68,7 @@ fun EmailAuthRoute(
         modifier,
         email,
         emailVerifyCode,
-        emailUiState,
+        emailSendingUiState,
         emailVerifyUiState,
         viewModel::updateEmail,
         viewModel::sendEmailCode,
@@ -84,7 +84,7 @@ fun EmailAuthScreen(
     modifier: Modifier = Modifier,
     email: String,
     emailVerifyCode: String,
-    uiState: UiState,
+    emailSendingUiState: UiState,
     emailVerifyUiState: UiState,
     updateEmail: (String) -> Unit,
     sendEmailCode: () -> Unit,
@@ -105,15 +105,15 @@ fun EmailAuthScreen(
             updateEmail = updateEmail
         )
 
-        when (uiState) {
+        when (emailSendingUiState) {
             UiState.Error, UiState.Loading -> {
                 BlackWhiteBasicButton(
                     modifier = modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 15.dp),
                     onClick = sendEmailCode,
-                    enabled = isValidEmail(email) && uiState !is UiState.Success,
-                    text = if (uiState is UiState.Loading) stringResource(R.string.authentication_request)
+                    enabled = isValidEmail(email) && emailSendingUiState !is UiState.Success,
+                    text = if (emailSendingUiState is UiState.Loading) stringResource(R.string.authentication_request)
                     else stringResource(R.string.retry)
                 )
             }
@@ -219,14 +219,14 @@ private fun handleEmailVerifyUiState(
 fun EmailAuthScreenPreview() {
     var email by remember { mutableStateOf("") }
     var emailVerifyCode by remember { mutableStateOf("") }
-    var uiState by remember { mutableStateOf(UiState.Loading) }
-    var emailVerifyUiState by remember { mutableStateOf(UiState.Success) }
+    var emailSendingUiState by remember { mutableStateOf(UiState.Success) }
+    var emailVerifyUiState by remember { mutableStateOf(UiState.Loading) }
 
     EmailAuthScreen(
         modifier = Modifier,
         email = email,
         emailVerifyCode = emailVerifyCode,
-        uiState = uiState,
+        emailSendingUiState = emailSendingUiState,
         emailVerifyUiState = emailVerifyUiState,
         updateEmail = { email = it },
         sendEmailCode = { },

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.gyub.puumin">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".PuumInApplication"
         android:allowBackup="true"
@@ -14,27 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PuumIn.Splash"
         tools:targetApi="31">
-        <!--        <activity-->
-        <!--            android:name=".MainActivity"-->
-        <!--            android:exported="true"-->
-        <!--            android:label="@string/app_name">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-
         <activity
-            android:name=".auth.SignUpActivity"
-            android:exported="true"
-            android:theme="@style/Theme.PuumIn">
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".home.HomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PuumIn" />
+
+        <activity
+            android:name=".auth.SignUpActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PuumIn" />
 
         <activity
             android:name=".auth.LoginActivity"

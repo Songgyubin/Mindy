@@ -2,6 +2,7 @@ package com.gyub.puumin.auth.ui
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,10 +31,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.gyub.design.component.textfield.RoundedInputTextField
-import com.gyub.puumin.MainActivity
 import com.gyub.puumin.R
 import com.gyub.puumin.auth.LoginViewModel
 import com.gyub.puumin.base.state.UiState
+import com.gyub.puumin.home.HomeActivity
 
 /**
  * 이메일 로그인 화면
@@ -137,7 +137,11 @@ fun EmailLoginScreen(
  * @param context
  */
 private fun showHomeActivity(context: Context) {
-    context.startActivity(Intent(context, MainActivity::class.java))
+    val intent = Intent(context, HomeActivity::class.java)
+        .apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+    context.startActivity(intent)
 }
 
 @Preview(showBackground = true)

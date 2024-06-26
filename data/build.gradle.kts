@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":common"))
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.datastore.preferences)
 
     kapt(libs.hilt.compiler)
 
@@ -44,5 +45,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.espresso.core)
 }

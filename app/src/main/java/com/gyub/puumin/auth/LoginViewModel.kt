@@ -2,8 +2,11 @@ package com.gyub.puumin.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gyub.common.const.UserPrefKey.TOKEN
+import com.gyub.data.datastore.UserPreferencesRepository
 import com.gyub.puumin.base.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +22,12 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LoginViewModel
-@Inject constructor() : ViewModel() {
+@Inject constructor(
+    private val userPreferencesRepository: UserPreferencesRepository,
+) : ViewModel() {
+
+    private val _backPressedOnce = MutableStateFlow(false)
+    val backPressedOnce: StateFlow<Boolean> get() = _backPressedOnce
 
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
@@ -54,10 +62,26 @@ class LoginViewModel
     fun login() {
         viewModelScope.launch {
             flow {
-                kotlinx.coroutines.delay(200)
+                delay(200)
                 emit(UiState.Success)
             }.collect {
                 _loginUiState.value = it
+                userPreferencesRepository.saveString(TOKEN, "testToken")
+            }
+        }
+    }
+
+    /**
+     * 뒤로가기 이벤트 감지
+     */
+    fun updateBackPressed() {
+        viewModelScope.launch {
+            if (_backPressedOnce.value) {
+                _backPressedOnce.value = false
+            } else {
+                _backPressedOnce.value = true
+                delay(2000)
+                _backPressedOnce.value = false
             }
         }
     }
