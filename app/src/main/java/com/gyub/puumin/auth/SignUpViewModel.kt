@@ -1,6 +1,5 @@
 package com.gyub.puumin.auth
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gyub.puumin.base.state.UiState
@@ -103,7 +102,6 @@ class SignUpViewModel
                 emit(UiState.Success)
             }.collect {
                 _emailUiState.value = it
-                Log.d("TAG", "email - : ${email.value}")
             }
         }
     }

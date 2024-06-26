@@ -11,11 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gyub.design.theme.PuumInTheme
-import com.gyub.puumin.navigation.SignUpDestination
-import com.gyub.puumin.navigation.SignUpNavHost
 import com.gyub.puumin.auth.ui.EMAIL_AUTH_ROOT
 import com.gyub.puumin.auth.ui.PASSWORD_ROUTE
 import com.gyub.puumin.auth.ui.USER_INFO_ROUTE
+import com.gyub.puumin.navigation.SignUpDestination
+import com.gyub.puumin.navigation.SignUpNavHost
 import com.gyub.puumin.ui.PuumInCenterAlignedAppBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +56,13 @@ class SignUpActivity : ComponentActivity() {
             topBar = {
                 PuumInCenterAlignedAppBar(
                     title = currentScreen.title,
-                    navigateUp = navController::navigateUp
+                    navigateUp = {
+                        if (currentScreen == SignUpDestination.EMAIL_AUTH) {
+                            finish()
+                        } else {
+                            navController.navigateUp()
+                        }
+                    }
                 )
             },
         ) { contentPadding ->

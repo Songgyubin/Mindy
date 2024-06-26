@@ -1,7 +1,11 @@
 package com.gyub.puumin.auth.ui
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,17 +22,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.gyub.design.R.drawable
 import com.gyub.design.theme.Kakao
 import com.gyub.design.theme.Naver
+import com.gyub.design.theme.PuumInTypography
 import com.gyub.puumin.R
+import com.gyub.puumin.auth.SignUpActivity
 
 /**
  * 로그인 화면
@@ -52,6 +59,7 @@ fun LoginHomeRoute(
     onEmailLogin: () -> Unit,
 ) {
     LoginHomeScreen(
+        modifier = modifier,
         onEmailLogin = onEmailLogin
     )
 }
@@ -61,6 +69,8 @@ fun LoginHomeScreen(
     modifier: Modifier = Modifier,
     onEmailLogin: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -90,6 +100,18 @@ fun LoginHomeScreen(
             IdLogin(
                 onEmailLogin = onEmailLogin
             )
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(modifier = Modifier
+                .padding(10.dp)
+                .clickable { moveSignUp(context) }
+            ) {
+                Text(
+                    text = stringResource(R.string.sign_up),
+                    style = PuumInTypography.bodyMedium.copy(
+                        textDecoration = TextDecoration.Underline
+                    )
+                )
+            }
             Spacer(modifier = Modifier.height(28.dp))
         }
     }
@@ -107,7 +129,7 @@ fun LoginButton(
     TextButton(
         onClick = onClick,
         modifier = Modifier
-            .clip(RoundedCornerShape(8.dp)) // 모서리를 둥글게
+            .clip(RoundedCornerShape(8.dp))
             .background(color = backgroundColor)
             .fillMaxWidth(),
     ) {
@@ -162,6 +184,14 @@ fun KakaoLogin() {
         textColor = Color.Black,
         onClick = {}
     )
+}
+
+/**
+ * 회원가입 화면 이동
+ */
+private fun moveSignUp(context:Context) {
+    val intent = Intent(context, SignUpActivity::class.java)
+    context.startActivity(intent)
 }
 
 @Composable
